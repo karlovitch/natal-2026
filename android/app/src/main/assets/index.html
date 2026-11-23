@@ -53,6 +53,10 @@ for(const [person,product,price] of [
  gifts=gifts.filter(x=>x===g||!matches.includes(x));
  Object.assign(g,{name:product,price,shop:'Amazon.es',status:'encomendado',method:'correio',payment:'cartao_credito',paymentSettled:'pendente',wrapped:'nao',notes:'Encomenda confirmada; entrega anunciada para sexta-feira. Pagamento por cartão de crédito autorizado, mas ainda não debitado na conta; valor pendente. Ainda não recebido nem embrulhado.'});
 }
+// Loja confirmada dos artigos de vestuário da MO de Barcelos.
+for(const [person,name] of [['D.ª Teresa','Casaco de malha'],['Tia Zeza','Sweater'],['Sr. André','Camisa 1'],['Sr. André','Camisa 2'],['D.ª Filomena','Casaco de malha']]){
+ for(const g of gifts){if(g.person===person&&norm(g.name)===norm(name))g.shop='MO de Barcelos';}
+}
 let selectedPhoto='',editorPhoto='';function persist(){try{localStorage.setItem('natal2026_v4',JSON.stringify({people,gifts}));}catch(e){}}function sum(a){return a.reduce((s,g)=>s+(g.price!==''&&Number.isFinite(Number(g.price))?Number(g.price):0),0)}function showEditor(g,p){editing=g?.id??null;$('person').innerHTML=people.map(x=>'<option>'+esc(x)+'</option>').join('');$('person').value=g?.person||p||people[0];for(let key of ['name','price','shop','status','method','date','order','notes','payment','paymentSettled','wrapped'])$(key).value=g?.[key]??(key==='status'?'planeado':key==='wrapped'?'nao':'');editorPhoto=g?.photo||selectedPhoto||'';$('editorPhotoArea').classList.toggle('hidden',!editorPhoto);if(editorPhoto)$('editorPhotoPreview').src=editorPhoto;$('editorTitle').textContent=g?'Editar presente':'Novo presente';$('editor').classList.remove('hidden');$('editor').scrollIntoView({behavior:'smooth',block:'start'});}function hideEditor(){$('editor').classList.add('hidden')}
 const comprasConcluidas=new Set(['Leonor','Carlota','Francisco','Sr. Décio','D.ª Teresa','Tia Zeza','Sr. André','D.ª Filomena']);
 function comprasTerminadas(p,all){return comprasConcluidas.has(p)&&all.length>0&&all.every(g=>g.status==='comprado'||g.status==='encomendado');}

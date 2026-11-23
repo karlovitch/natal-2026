@@ -34,7 +34,9 @@ for(const [person,name] of [['Leonor','Câmara digital'],['Francisco','Camião-g
 // Sincronização de presentes confirmados: evita duplicados e preserva alterações aos restantes.
 {
 const person='Francisco',name='Puzzle Peppa Pig 4 em 1 — Clementoni';
-let matches=gifts.filter(g=>g.person===person&&(norm(g.name)===norm(name)||norm(g.name)==='sort puzzle 4 em 1 clementoni'));
+let matches=gifts.filter(g=>g.person===person&&(norm(g.name)===norm(name)||norm(g.name)==='sort puzzle 4 em 1 clementoni'||norm(g.name)==='puzzle 4 em 1 clementoni'));
+// Remover a entrada genérica duplicada, preservando o puzzle Peppa Pig.
+let preferred=matches.find(g=>norm(g.name)===norm(name));if(preferred)matches=[preferred,...matches.filter(g=>g!==preferred)];
 let g=matches[0];if(!g){g={id:Date.now()+Math.floor(Math.random()*1000000),person,name};gifts.push(g);}
 gifts=gifts.filter(x=>x===g||!matches.includes(x));
 Object.assign(g,{name,price:'9.99',shop:'Continente',status:'comprado',method:'loja',payment:'numerario',wrapped:'sim',notes:'Talão: SORT PUZZLE 4 EM 1 CLEMENTONI; pago em numerário, já recebido e embrulhado.'});

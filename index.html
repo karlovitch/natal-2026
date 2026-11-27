@@ -171,5 +171,7 @@ $('photoClear').onclick=()=>{selectedPhoto='';$('photoPreview').classList.add('h
 $('photoManual').onclick=()=>showEditor(null);
 $('editorRemovePhoto').onclick=()=>{editorPhoto='';$('editorPhotoArea').classList.add('hidden');};
 $('readPhoto').onclick=async()=>{if(!selectedPhoto)return;try{let detector=new window.TextDetector();let image=new Image();image.src=selectedPhoto;await image.decode();let result=await detector.detect(image);let text=result.map(x=>x.rawValue).join(' ');if(!text)throw Error('Não foi encontrado texto legível.');$('instruction').value=text;$('photoMessage').textContent='Texto extraído. Revê-o e toca em «Interpretar texto»; confirma os campos antes de guardar.';}catch(e){$('photoMessage').textContent='Não foi possível reconhecer o texto automaticamente neste dispositivo. Usa «Preencher dados a partir da fotografia».';}};
+
+for(const [name,price,ref] of [["Calças de ganga JAY Slim Straight — azul médio (33)","34.99","06.04.032.0791"],["Calças de ganga JAY — azul escuro (32)","29.99","06.04.032.0491"],["Camisola de malha polo — cinzento-claro mesclado (M)","24.99","05.03.130.0298"],["Sweatshirt Scuba Polo Zipper — branca (L)","24.99","06.04.120.0701"]]){if(!gifts.some(g=>g.person==='Carlos'&&g.name===name))gifts.push({id:Date.now()+gifts.length,person:'Carlos',name,price,shop:'New Yorker — Nova Arcada',status:'comprado',method:'loja',payment:'cartao_credito',paymentSettled:'pendente',wrapped:'nao',date:'',order:'',notes:'Compra de 27/11/2026. Ref. '+ref});}
 persist();render();})();
 </script></body></html>
